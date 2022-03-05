@@ -6,7 +6,7 @@ import PomodoroClock from '../PomodoroClock';
 
 export default function PomodoroBox() {
   return (
-    <Flex mt={20} flexDirection="column">
+    <Flex flexDirection="column">
       <Flex align="center" gap={1}>
         <Text fontSize="1.2rem" fontFamily="Lexend" fontWeight={600} color="gray.300">Choose your time and start a cycle </Text>
       </Flex>
