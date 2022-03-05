@@ -2,7 +2,7 @@ import { extendTheme } from '@chakra-ui/react';
 
 const colors = {
   primaryColor: {
-    600: '#D97200',
+    600: '#F68200',
     500: '#FF8804',
     400: '#FF981F',
   },
