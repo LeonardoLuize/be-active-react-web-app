@@ -12,7 +12,7 @@ export default function Clock() {
       spacing={0}
     >
       <Card firstNumber={0} secondNumber={0} />
-      <Text px={7} fontFamily="Rajdhani" fontSize="3rem">:</Text>
+      <Text color="#4D4D4D" px={7} fontFamily="Rajdhani" fontSize="3rem">:</Text>
       <Card firstNumber={0} secondNumber={0} />
     </Flex>
   );

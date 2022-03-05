@@ -11,6 +11,7 @@ export default function Card({ firstNumber, secondNumber }) {
       fontSize="5.4rem"
       fontWeight="bold"
       fontFamily="Rajdhani"
+      color="#4D4D4D"
       boxShadow="-1px 6px 21px -8px rgba(0, 0, 0, 0.25)"
     >
       <Flex
