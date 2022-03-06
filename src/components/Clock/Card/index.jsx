@@ -2,7 +2,9 @@
 import React from 'react';
 import { Flex } from '@chakra-ui/react';
 
-export default function Card({ firstNumber, secondNumber }) {
+export default function Card({ time }) {
+  const [timeLeft, timeRight] = String(time).padStart(2, '0').split('');
+
   return (
     <Flex
       display="flex"
@@ -23,7 +25,7 @@ export default function Card({ firstNumber, secondNumber }) {
         borderRight="2px solid #dddddd"
         borderRadius="8px 0px 0px 8px"
       >
-        {firstNumber}
+        {timeLeft}
       </Flex>
       <Flex
         align="center"
@@ -33,7 +35,7 @@ export default function Card({ firstNumber, secondNumber }) {
         width="110px"
         borderRadius="0px 8px 8px 0px"
       >
-        {secondNumber}
+        {timeRight}
       </Flex>
     </Flex>
   );
