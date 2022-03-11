@@ -7,7 +7,7 @@ import { CountdownContext } from '../../context/CountdownContext';
 
 export default function Clock() {
   const {
-    focusMinutes, focusSeconds,
+    focusMinutes, focusSeconds, restMinutes, restSeconds, hasFinished,
   } = useContext(CountdownContext);
 
   return (
@@ -16,9 +16,9 @@ export default function Clock() {
       my={8}
       spacing={0}
     >
-      <Card time={focusMinutes} />
+      <Card time={!hasFinished ? focusMinutes : restMinutes} />
       <Text color="#4D4D4D" px={7} fontFamily="Rajdhani" fontSize="3rem">:</Text>
-      <Card time={focusSeconds} />
+      <Card time={!hasFinished ? focusSeconds : restSeconds} />
     </Flex>
   );
 }

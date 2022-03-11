@@ -5,13 +5,15 @@ import { CountdownContext } from '../../context/CountdownContext';
 import Clock from '../Clock';
 
 export default function PomodoroClock() {
-  const { startCountdown, resetCountdown, isActive } = useContext(CountdownContext);
+  const {
+    startCountdown, resetCountdown, isActive, hasFinished,
+  } = useContext(CountdownContext);
 
   return (
     <>
       <Clock />
       {
-        !isActive
+        !isActive && !hasFinished
           ? (
             <Button onClick={startCountdown} fontFamily="Lexend" py={6} fontSize="1.2rem" colorScheme="primaryColor" size="lg">
               <Icon as={HiLightningBolt} me={2} />
@@ -35,10 +37,10 @@ export default function PomodoroClock() {
               }}
             >
               <Icon width="22px" height="22px" as={HiOutlineXCircle} me={2} />
-              Interrupt cycle
+              {!hasFinished ? 'Interrupt cycle' : 'Stop rest time' }
             </Button>
           )
-}
+      }
     </>
   );
 }
