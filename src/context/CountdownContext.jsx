@@ -68,8 +68,6 @@ export default function CountdownProvider({ children }) {
     new Audio('./notification.mp3').play();
 
     if (Notification.permission === 'granted') {
-      console.log(__dirname);
-
       const notification = new Notification(title, {
         icon: './favicon.svg',
         body: message,
