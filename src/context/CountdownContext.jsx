@@ -69,7 +69,7 @@ export default function CountdownProvider({ children }) {
 
     if (Notification.permission === 'granted') {
       const notification = new Notification(title, {
-        icon: './favicon.svg',
+        icon: './assets/notificationImageAlt.png',
         body: message,
       });
 
