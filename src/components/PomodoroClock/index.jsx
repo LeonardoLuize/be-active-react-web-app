@@ -15,7 +15,7 @@ export default function PomodoroClock() {
       {
         !isActive && !hasFinished
           ? (
-            <Button onClick={startCountdown} fontFamily="Lexend" py={6} fontSize="1.2rem" colorScheme="primaryColor" size="lg">
+            <Button onClick={startCountdown} fontFamily="Lexend" py={6} height="60px" fontSize="1.2rem" colorScheme="primaryColor" size="lg">
               <Icon as={HiLightningBolt} me={2} />
               Start cycle
             </Button>
@@ -29,6 +29,7 @@ export default function PomodoroClock() {
               colorScheme="secondaryColor"
               variant="outline"
               borderWidth="2px"
+              height="60px"
               size="lg"
               _hover={{
                 bg: 'secondaryColor.500',
