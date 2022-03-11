@@ -96,7 +96,7 @@ export default function CountdownProvider({ children }) {
 
       finishCycle(
         'You concluded a new cycle! 🎉',
-        `Now take a break for ${restTimeModel} minutes.`,
+        `Now take a break for ${restTimeModel} ${Number(restTimeModel) === 1 ? 'minute' : 'minutes'}.`,
       );
     }
   }, [isActive, focusTime]);
@@ -113,7 +113,7 @@ export default function CountdownProvider({ children }) {
 
       finishCycle(
         'Your rest time finished, time to work 📚',
-        `Let's work, now a new cycle started for ${focusTimeModel} minutes.`,
+        `Let's work, now a new cycle started for ${focusTimeModel} ${Number(focusTimeModel) === 1 ? 'minute' : 'minutes'}.`,
       );
       resetCountdown();
       startCountdown();
