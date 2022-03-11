@@ -11,13 +11,14 @@ export default function CountdownProvider({ children }) {
   let timeOut;
   let restTimeOut;
 
-  const [focusTimeModel, setFocusTimeModelModel] = useState(25);
-  const [restTimeModelModel, setRestTimeModelModel] = useState(5);
+  const [focusTimeModel, setFocusTimeModel] = useState(25);
+  const [restTimeModel, setRestTimeModel] = useState(5);
 
   const [focusTime, setFocusTime] = useState(focusTimeModel * 60);
-  const [restTime, setRestTime] = useState(restTimeModelModel * 60);
+  const [restTime, setRestTime] = useState(restTimeModel * 60);
   const [isActive, setIsActive] = useState(false);
   const [isRestActive, setIsRestActive] = useState(false);
+  const [hasFinished, setHasFinished] = useState(false);
 
   const focusMinutes = Math.floor(focusTime / 60);
   const focusSeconds = focusTime % 60;
@@ -25,24 +26,61 @@ export default function CountdownProvider({ children }) {
   const restMinutes = Math.floor(restTime / 60);
   const restSeconds = restTime % 60;
 
-  function updateTime(focusTime, restTime) {
-    setFocusTimeModelModel(focusTime);
-    setRestTimeModelModel(restTime);
-  }
+  useEffect(() => {
+    Notification.requestPermission();
+  }, []);
 
   function startCountdown() {
     setIsActive(true);
+  }
+
+  function resetBooleans() {
+    setIsActive(false);
+    setIsRestActive(false);
+
+    setHasFinished(false);
   }
 
   function resetCountdown() {
     clearTimeout(timeOut);
     clearTimeout(restTimeOut);
 
-    setIsActive(false);
-    setIsRestActive(false);
+    resetBooleans();
 
     setFocusTime(focusTimeModel * 60);
-    setRestTime(restTimeModelModel * 60);
+    setRestTime(restTimeModel * 60);
+  }
+
+  function updateTime(newFocusTime, newRestTime) {
+    setFocusTimeModel(newFocusTime);
+    setRestTimeModel(newRestTime);
+
+    resetBooleans();
+
+    setFocusTime(newFocusTime * 60);
+    setRestTime(newRestTime * 60);
+
+    clearTimeout(timeOut);
+    clearTimeout(restTimeOut);
+  }
+
+  function finishCycle(title, message) {
+    new Audio('./notification.mp3').play();
+
+    if (Notification.permission === 'granted') {
+      console.log(__dirname);
+
+      const notification = new Notification(title, {
+        icon: './favicon.svg',
+        body: message,
+      });
+
+      notification.onclick = (e) => {
+        e.preventDefault();
+        window.focus();
+        notification.close();
+      };
+    }
   }
 
   // Focus time
@@ -54,6 +92,12 @@ export default function CountdownProvider({ children }) {
     } else if (isActive && focusTime === 0) {
       setIsActive(false);
       setIsRestActive(true);
+      setHasFinished(true);
+
+      finishCycle(
+        'You concluded a new cycle! 🎉',
+        `Now take a break for ${restTimeModel} minutes.`,
+      );
     }
   }, [isActive, focusTime]);
 
@@ -65,6 +109,14 @@ export default function CountdownProvider({ children }) {
       }, 1000);
     } else if (isRestActive && restTime === 0) {
       setIsRestActive(false);
+      setHasFinished(false);
+
+      finishCycle(
+        'Your rest time finished, time to work 📚',
+        `Let's work, now a new cycle started for ${focusTimeModel} minutes.`,
+      );
+      resetCountdown();
+      startCountdown();
     }
   }, [isRestActive, restTime]);
 
@@ -79,8 +131,9 @@ export default function CountdownProvider({ children }) {
       resetCountdown,
       isActive,
       isRestActive,
+      hasFinished,
     }
-  ), [focusSeconds, restSeconds, isActive, isRestActive]);
+  ), [isActive, isRestActive, focusTime, restTime]);
 
   return (
     <CountdownContext.Provider value={contextValue}>
